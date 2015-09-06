@@ -63,6 +63,13 @@ These are another example what to test if a service changed.
 <a href="url"><img src="https://cloud.githubusercontent.com/assets/1484308/9704804/ead18e9c-54dc-11e5-82c4-db821d903655.jpg"></a>
 <a href="url"><img src="https://cloud.githubusercontent.com/assets/1484308/9705261/57b0622a-54e9-11e5-9f2c-781c05fb1107.jpg"></a>
 
+## How to list all affected services
+
+We can use git to list changed service, then use simple bash script to list affected services.
+
+``` git diff --name-only HEAD~1 HEAD ```
+
+``` Some bash script ```
 
 ## Test Speed Improvement
 
