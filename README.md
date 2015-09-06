@@ -11,7 +11,7 @@ app
 ### 1. Fat Controller, Skinny Model
 
 Bad:
-- Not DRY because all business logic is inside the controller, you can't re-use it
+- Not DRY (Don't Repeat Yourself) because all business logic is inside the controller, you can't re-use it
 - Hard to test
 
 ### 2. Skinny Controller, Fat Model
@@ -50,6 +50,7 @@ app
 │       ├── RegisterUser.rb
 │       └── ResetPassword.rb
 └── views
+...
 ```
 Service layer is following SRP, thus class RegisterUser should only have one responsbility, but **doesn't mean it must only have one method.**
 
@@ -102,11 +103,12 @@ app
 │   │   ├── Query.rb
 │       └── ChooseWinner.rb
 └── views
+...
 ```
 
 Why Z?
 - It sorts your services folder automatically, instantly give you the big picture
-- Inevitably, Z-Level will have straight correlation with your simplicity, the higher Z-Level, the more coupled your SRP. So **it best to maintain your Z-Level low**.
+- Inevitably, Z-Level will have straight correlation with your simplicity, the higher Z-Level, the more coupled your classes. So **it best to maintain your Z-Level low**.
 
 #### 3.3 Libs
 If there are business logic that doesn't fit in service layer, you should put it on Libs folder. e.g: Cache, Elasticsearch.
@@ -120,7 +122,7 @@ class Services::User::Query
     @user = user
   end
 
-  def getAllWinningContest
+  def isPotential?
 
   end
 
@@ -135,9 +137,11 @@ Controllers just need to call service it needs to operate, that simple!
 #### 3.5 Test
 - If you change ```services/user/RegisterUser```, you only need to test ```services/user/RegisterUser```
 - If you change ```models/User``` or ```services/user/Query```, you need to test ```services/user/*``` and all correlated Z-Level, ```[z]+[_user]+```
-- If you change ```services/z_contest_user/Query```, you need to test ```services/z_contest_user/*``` and all correlated Z-Level, ```[z]+[_contest|_user]+```
+- If you change ```services/z_contest_user/Query```, you need to test ```services/z_contest_user/*``` and all correlated Z-Level, ```z[z]+[_contest|_user]+```
 
 Look at the pattern, the higher Z-Level changed, the smaller test coverage needed to run. It means your test more organized and faster. You can even create a simple bash script to generate which file is affected by your change.
+
+[**Here is the prove that explain why using Z-Level can make your test faster.**](test_speed_improvement_explanation.md)
 
 #### 3.6 Summary
 - Code more well-ordered
